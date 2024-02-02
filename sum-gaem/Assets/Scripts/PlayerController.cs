@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,18 +6,42 @@ using UnityEngine.EventSystems;
 
 public class PlayerController : MonoBehaviour
 {
+    public static PlayerController Instance { get; private set; }
 
+    public event EventHandler<OnSelectedCounterChangedEventArgs> OnSelectedCounterChanged;
+
+    public class OnSelectedCounterChangedEventArgs : EventArgs
+    {
+        public ClearCounter selectedCounter;
+    }
 
     [SerializeField] private float moveSpeed = 7f;
     [SerializeField] private InputManager inputManager;
     [SerializeField] private LayerMask countersLayerMask;
-    private Vector3 lastInteractDirection;
+    private Vector3 mLastInteractDirection;
+    private ClearCounter selectedCounter;
     public bool IsWalking {get;set;}
 
-    private void Update()
+
+    private void Awake()
     {
-        HandleMovement();
-        HandleInteractions();
+        if(Instance != null)
+        {
+            Debug.LogError("More than one Player detected");
+        }
+        Instance = this;
+    }
+    private void Start()
+    {
+        inputManager.OnInteractAction += InputManager_OnInteractAction;
+    }
+
+    private void InputManager_OnInteractAction(object sender, System.EventArgs e)
+    {
+        if (selectedCounter != null)
+        {
+            selectedCounter.Interact();
+        }
     }
 
     private void HandleInteractions()
@@ -26,16 +51,48 @@ public class PlayerController : MonoBehaviour
         Vector3 moveDir = new Vector3(inputVector.x, 0, inputVector.y);
         if (moveDir != Vector3.zero)
         {
-            lastInteractDirection = moveDir;
+            mLastInteractDirection = moveDir;
         }
-        if(Physics.Raycast(transform.position, lastInteractDirection,out RaycastHit hit, interactDistance,countersLayerMask))
+        if (Physics.Raycast(transform.position, mLastInteractDirection, out RaycastHit hit, interactDistance, countersLayerMask))
         {
-            if(hit.transform.TryGetComponent(out ClearCounter clearCounter))
+            if (hit.transform.TryGetComponent(out ClearCounter clearCounter))
             {
-                clearCounter.Interact();
+                if(clearCounter != selectedCounter)
+                {
+                    SetSelectedCounter(clearCounter);
+                }
+            }
+            else
+            {
+                SetSelectedCounter(null);
+
             }
         }
+        else
+        {
+            SetSelectedCounter(null);
+        }
     }
+
+    private void SetSelectedCounter(ClearCounter clearCounter)
+    {
+        selectedCounter = clearCounter;
+        OnSelectedCounterChanged?.Invoke(
+            this,
+            new OnSelectedCounterChangedEventArgs
+            {
+                selectedCounter = selectedCounter
+            }
+        );
+    }
+
+    private void Update()
+    {
+        HandleMovement();
+        HandleInteractions();
+    }
+
+   
 
     private void HandleMovement()
     {
