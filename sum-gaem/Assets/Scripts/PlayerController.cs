@@ -103,8 +103,6 @@ public class PlayerController : MonoBehaviour, IKitchenObjectParent
         HandleInteractions();
     }
 
-   
-
     private void HandleMovement()
     {
         float rotateSpeed = 10f;
@@ -123,7 +121,7 @@ public class PlayerController : MonoBehaviour, IKitchenObjectParent
 
             // Attempt movement on X dir
             Vector3 moveDirX = new Vector3(moveDir.x, 0, 0).normalized;
-            canMove = !Physics.CapsuleCast(transform.position, transform.position + Vector3.up * playerHeight, playerRadius, moveDirX, moveDistance);
+            canMove = moveDir.x != 0 && !Physics.CapsuleCast(transform.position, transform.position + Vector3.up * playerHeight, playerRadius, moveDirX, moveDistance);
             if (canMove)
             {
                 moveDir = moveDirX;
@@ -132,7 +130,7 @@ public class PlayerController : MonoBehaviour, IKitchenObjectParent
             {
                 // Attempt movement on Z dir
                 Vector3 moveDirZ = new Vector3(0, 0, moveDir.z).normalized;
-                canMove = !Physics.CapsuleCast(transform.position, transform.position + Vector3.up * playerHeight, playerRadius, moveDirZ, moveDistance);
+                canMove = moveDir.z != 0 && !Physics.CapsuleCast(transform.position, transform.position + Vector3.up * playerHeight, playerRadius, moveDirZ, moveDistance);
                 if (canMove)
                 {
                     moveDir = moveDirZ;
