@@ -10,6 +10,9 @@ public interface IKitchenObjectParent
 
     public KitchenObject GetKitchenObject();
 
+    /// <summary>
+    /// Unparents the Kitchen object from it's current parent
+    /// </summary>
     public void ClearKitchenObject();
 
     public bool HasKitchenObject();
