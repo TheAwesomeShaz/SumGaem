@@ -14,8 +14,7 @@ public class InputManager : MonoBehaviour
         playerInputActions = new PlayerInputActions();
         playerInputActions.Player.Enable();
         playerInputActions.Player.Interact.performed += InteractPerformed;
-        playerInputActions.Player.InteractAlternate.performed += InteractAlternate_performed; ;
-
+        playerInputActions.Player.InteractAlternate.performed += InteractAlternate_performed;
     }
 
     private void InteractAlternate_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
@@ -31,8 +30,6 @@ public class InputManager : MonoBehaviour
     public Vector2 GetMovementVectorNormalized()
     {
         Vector2 inputVector = playerInputActions.Player.Movement.ReadValue<Vector2>();
-
-        inputVector = inputVector.normalized;
-        return inputVector;
+        return inputVector.normalized;
     }
 }
