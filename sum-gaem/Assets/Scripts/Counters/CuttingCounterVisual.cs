@@ -6,13 +6,12 @@ public class CuttingCounterVisual : MonoBehaviour
 {
     private const string CUT = "Cut";
 
-    [SerializeField]
-    private CuttingCounter cuttingCounter;
-    private Animator mAnimator;
+    [SerializeField] private CuttingCounter cuttingCounter;
+    private Animator animator;
 
     private void Awake()
     {
-        mAnimator = GetComponent<Animator>();
+        animator = GetComponent<Animator>();
     }
 
     private void Start()
@@ -22,7 +21,7 @@ public class CuttingCounterVisual : MonoBehaviour
 
     private void CuttingCounter_OnCut(object sender, System.EventArgs e)
     {
-        mAnimator.SetTrigger(CUT);
+        animator.SetTrigger(CUT);
     }
      
 }

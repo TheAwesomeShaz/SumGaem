@@ -5,7 +5,7 @@ using UnityEngine;
 public class KitchenObject : MonoBehaviour
 {
     [SerializeField] private KitchenObjectSO kitchenObjectSO;
-    private IKitchenObjectParent mKitchenObjectParent;
+    private IKitchenObjectParent kitchenObjectParent;
 
     public KitchenObjectSO GetKitchenObjectSO()
     {
@@ -14,14 +14,14 @@ public class KitchenObject : MonoBehaviour
 
     public void SetKitchenObjectParent(IKitchenObjectParent kitchenObjectParent)
     {
-        if (mKitchenObjectParent != null)
+        if (this.kitchenObjectParent != null)
         {
-            mKitchenObjectParent.ClearKitchenObject();
+            this.kitchenObjectParent.ClearKitchenObject();
         }
 
-        mKitchenObjectParent = kitchenObjectParent;
+        this.kitchenObjectParent = kitchenObjectParent;
 
-        if (mKitchenObjectParent.HasKitchenObject())
+        if (this.kitchenObjectParent.HasKitchenObject())
         {
             Debug.LogError("KitchenObjectParent already has a Kitchen Object");
         }
@@ -31,13 +31,13 @@ public class KitchenObject : MonoBehaviour
         }
 
 
-        transform.parent = mKitchenObjectParent.GetKitchenObjectFollowTransform();
+        transform.parent = this.kitchenObjectParent.GetKitchenObjectFollowTransform();
         transform.localPosition = Vector3.zero;
     }
 
     public IKitchenObjectParent GetKitchenObjectParent()
     {
-        return mKitchenObjectParent;
+        return kitchenObjectParent;
     }
 
     public bool TryGetPlate(out PlateKitchenObject plateKitchenObject)
@@ -56,7 +56,7 @@ public class KitchenObject : MonoBehaviour
 
     public void DestroySelf()
     {
-        mKitchenObjectParent.ClearKitchenObject();
+        kitchenObjectParent.ClearKitchenObject();
         Destroy(gameObject);
     }
 

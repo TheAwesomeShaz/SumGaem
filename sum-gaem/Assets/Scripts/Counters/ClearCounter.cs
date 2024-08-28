@@ -39,11 +39,11 @@ public class ClearCounter : BaseCounter
                 }
                 else
                 {
-                    // Player is not carrying a plate but carrying summ else (sussy?)
+                    // Player is not carrying a plate but carrying summ else 
                     if(GetKitchenObject().TryGetPlate(out plateKitchenObject))
                     {
                         // Counter has a plate on top of it
-                        if (plateKitchenObject.TryAddIngredient(playerController.GetKitchenObject().GetKitchenObjectSO())) ;
+                        if (plateKitchenObject.TryAddIngredient(playerController.GetKitchenObject().GetKitchenObjectSO())) 
                         {
                             playerController.GetKitchenObject().DestroySelf();
                         }

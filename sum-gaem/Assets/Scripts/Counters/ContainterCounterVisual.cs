@@ -14,7 +14,6 @@ public class ContainterCounterVisual : MonoBehaviour
     {
         mAnimator = GetComponent<Animator>();
     }
-
     private void Start()
     {
         containterCounter.OnPlayerGrabbedObject += ContainterCounter_OnPlayerGrabbedObject;

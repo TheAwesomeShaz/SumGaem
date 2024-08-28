@@ -13,11 +13,11 @@ public class PlateKitchenObject : KitchenObject
 
 
     [SerializeField] private List<KitchenObjectSO> validKitchenObjectSOList;
-    private List<KitchenObjectSO> mKitchenObjectSOList;
+    private List<KitchenObjectSO> kitchenObjectSOList;
 
     private void Awake()
     {
-        mKitchenObjectSOList = new();
+        kitchenObjectSOList = new();
     }
 
     public bool TryAddIngredient(KitchenObjectSO kitchenObjectSO)
@@ -29,14 +29,14 @@ public class PlateKitchenObject : KitchenObject
         }
         else
         {
-            if (mKitchenObjectSOList.Contains(kitchenObjectSO))
+            if (kitchenObjectSOList.Contains(kitchenObjectSO))
             {
                 // Already has this added
                 return false;
             }
             else
             {
-                mKitchenObjectSOList.Add(kitchenObjectSO);
+                kitchenObjectSOList.Add(kitchenObjectSO);
                 OnIngredientAdded?.Invoke(this, new OnIngredientAddedEventArgs
                 {
                     kitchenObjectSO = kitchenObjectSO,
@@ -48,6 +48,6 @@ public class PlateKitchenObject : KitchenObject
 
     public List<KitchenObjectSO> GetKitchenObjectSOList()
     {
-        return mKitchenObjectSOList;
+        return kitchenObjectSOList;
     } 
 }

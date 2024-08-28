@@ -5,7 +5,7 @@ public class BaseCounter : MonoBehaviour, IKitchenObjectParent
 {
     [SerializeField] 
     private Transform counterTopPoint;
-    private KitchenObject mKitchenObject;
+    private KitchenObject kitchenObject;
 
     public virtual void Interact(PlayerController playerController)
     {
@@ -25,22 +25,22 @@ public class BaseCounter : MonoBehaviour, IKitchenObjectParent
 
     public void SetKitchenObject(KitchenObject kitchenObject)
     {
-        this.mKitchenObject = kitchenObject;
+        this.kitchenObject = kitchenObject;
     }
 
     public KitchenObject GetKitchenObject()
     {
-        return mKitchenObject;
+        return kitchenObject;
     }
 
     public void ClearKitchenObject()
     {
-        mKitchenObject = null;
+        kitchenObject = null;
     }
 
     public bool HasKitchenObject()
     {
-        return mKitchenObject != null;
+        return kitchenObject != null;
     }
 
   

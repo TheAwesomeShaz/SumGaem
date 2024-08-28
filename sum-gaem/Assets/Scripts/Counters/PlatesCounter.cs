@@ -11,20 +11,20 @@ public class PlatesCounter : BaseCounter
     [SerializeField] private KitchenObjectSO plateKitchenObjectSO;
     [SerializeField] private float spawnPlateTimerMax = 4f;
 
-    private float mSpawnPlateTimer;
-    private int mPlatesSpawnedAmount;
-    private int mPlatesSpawnedAmountMax = 4;
+    private float spawnPlateTimer;
+    private int platesSpawnedAmount;
+    private int platesSpawnedAmountMax = 4;
 
     private void Update()
     {
-        mSpawnPlateTimer += Time.deltaTime;
-        if(mSpawnPlateTimer > spawnPlateTimerMax)
+        spawnPlateTimer += Time.deltaTime;
+        if(spawnPlateTimer > spawnPlateTimerMax)
         {
-            mSpawnPlateTimer = 0;
+            spawnPlateTimer = 0;
 
-            if(mPlatesSpawnedAmount < mPlatesSpawnedAmountMax)
+            if(platesSpawnedAmount < platesSpawnedAmountMax)
             {
-                mPlatesSpawnedAmount++;
+                platesSpawnedAmount++;
 
                 OnPlateSpawned?.Invoke(this, EventArgs.Empty);
             }
@@ -36,10 +36,10 @@ public class PlatesCounter : BaseCounter
         if (!playerController.HasKitchenObject())
         {
             // player is not carrying anything
-            if(mPlatesSpawnedAmount > 0)
+            if(platesSpawnedAmount > 0)
             {
                 // there is atleast one plate on the counter
-                mPlatesSpawnedAmount--;
+                platesSpawnedAmount--;
                 KitchenObject.SpawnKitchenObject(plateKitchenObjectSO, playerController);
                 OnPlateRemoved?.Invoke(this, EventArgs.Empty);  
             }
